@@ -1,97 +1,85 @@
-.products-page {
-  display: flex;
-}
-
-.filter-sidebar {
-  width: 200px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-right: 1px solid #ddd;
-}
-
-.filter-sidebar h3 {
-  margin-bottom: 10px;
-}
-
-.filter-sidebar select {
-  width: 100%;
-  padding: 8px;
-  margin-bottom: 20px;
-}
-
-.product-container {
-  flex: 1;
-  padding: 20px;
-}
-
-.product-container .heading {
-  color: rgb(53, 53, 67);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 40px;
-  font-family: "Mier book";
-  text-align: left;
-  margin: 0px;
-  padding: 0px 0px 28px;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.product-card {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.product-card:hover {
-  transform: scale(1.05);
-}
-
-.product-info {
-  text-align: left;
-  width: 100%;
-}
-
-.product-info h2 {
-  font-size: 14px;
-  color: gray;
-}
-
-.product-info p {
-  font-size: 17px;
-  margin: 5px 0;
-  font-weight: bold;
-}
-
-.onward {
-  font-size: 12px;
-  font-weight: normal;
-  color: gray;
-}
-
-.product-info .rupee-symbol {
-  font-weight: bold;
-  font-size: 18px;
-}
-
-.free {
-  margin: 1rem;
-}
-
-.deliver {
-  background-color: rgb(255, 255, 255);
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: normal;
-}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .product-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-image {
+    flex: 1;
+    max-width: 40%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .product-image img {
+    width: 80%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .product-actions {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+  
+  .product-actions button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-to-cart {
+    background-color: #ff9800;
+    color: white;
+  }
+  
+  .buy-now {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .product-details {
+    flex: 2;
+    max-width: 40%;
+    padding: 20px;
+  }
+  
+  .product-details h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  .product-details p {
+    margin: 10px 0;
+    color: #666;
+  }
+  
+  .product-price {
+    font-size: 1.5em;
+    color: #e60000;
+  }
+  
+  .product-rating {
+    font-size: 1.2em;
+    color: #ff9800;
+  }

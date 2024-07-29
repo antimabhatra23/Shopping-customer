@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 
 const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); // Remove token on logout
     navigate("/");
+  };
+
+  const token = localStorage.getItem("token");
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
@@ -22,10 +29,23 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
         </li>
       </div>
       <ul className="navbar-right">
-        {isLoggedIn ? (
+        {isLoggedIn || token ? (
           <>
-            <li>
-              <Link to="/add-product">My Profile</Link>
+            <li className="profile-menu">
+              <button onClick={toggleDropdown} className="profile-button">My Profile</button>
+              {isDropdownOpen && (
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link to="/view-profile">View Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/my-orders">My Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/delete-account">Delete Account</Link>
+                  </li>
+                </ul>
+              )}
             </li>
             <li>
               <button onClick={handleLogout} className="logout-button">Logout</button>

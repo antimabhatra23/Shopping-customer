@@ -1,14 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import "./product.css"; // Import the CSS file
+import "./products.css"; // Import the CSS file
 import { useNavigate } from "react-router-dom"; // Import the useNavigate hook from react-router-dom";
 
 const Products = () => {
   const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState([]);
-  const [categories, setCategories] = useState([]); // State to hold categories
-  const [selectedCategory, setSelectedCategory] = useState(''); // State to hold the selected category
+  // const [categories, setCategories] = useState([]); // State to hold categories
+  // const [selectedCategory, setSelectedCategory] = useState(''); // State to hold the selected category
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
@@ -18,7 +18,7 @@ const Products = () => {
 
   useEffect(() => {
     loadProducts();
-    loadCategories(); // Load categories on component mount
+    // loadCategories(); // Load categories on component mount
   }, []);
 
   const loadProducts = async (category = '', gender = '', color = '', price = '', size = '', rating = '') => {
@@ -33,33 +33,33 @@ const Products = () => {
     }
   };
 
-  const loadCategories = async () => {
-    try {
-      const response = await axios.get("http://localhost:5000/categories");
-      setCategories(response?.data?.categories);
-    } catch (error) {
-      toast.error("Failed to load categories");
-    }
-  };
+  // const loadCategories = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:5000/categories");
+  //     setCategories(response?.data?.categories);
+  //   } catch (error) {
+  //     toast.error("Failed to load categories");
+  //   }
+  // };
 
   const handleProductClick = (product) => {
-    navigate(`/product/${product._id}`);
+    navigate(`/product`,{state: {product}});
   };
 
   const handleFilterChange = () => {
-    loadProducts(selectedCategory, selectedGender, selectedColor, selectedPrice, selectedSize, selectedRating);
+    loadProducts(selectedGender, selectedColor, selectedPrice, selectedSize, selectedRating);
   };
 
   return (
     <div className="products-page">
       <div className="filter-sidebar">
-        <h3>Filter by Category</h3>
+        {/* <h3>Filter by Category</h3>
         <select value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); handleFilterChange(); }}>
           <option value="">All</option>
           {categories.map(category => (
             <option key={category} value={category}>{category}</option>
           ))}
-        </select>
+        </select> */}
         
         <h3>Filter by Gender</h3>
         <select value={selectedGender} onChange={(e) => { setSelectedGender(e.target.value); handleFilterChange(); }}>
@@ -109,25 +109,24 @@ const Products = () => {
         </select>
 
       </div>
-      <div className="product-container">
+      <div className="products-container">
       <h1 className="heading">Products For You</h1>
-        <div className="product-grid">
+        <div className="products-grid">
           {productList.length > 0 ? (
             productList.map((item) => (
               <div 
                 key={item._id} 
-                className="product-card"
+                className="products-card"
                 onClick={() => handleProductClick(item)} // Make the card clickable
               >
                 <img width={150} height={150} src={item?.img} alt={item?.name} />
-                <div className="product-info">
+                <div className="products-info">
                   <h2>{item?.name}</h2>
                   <p><span className="rupee-symbol"> ₹ </span>{item?.price} <span className="onward">onwards</span></p>
 
                   <div className="free">
                     <p><span className="deliver">Free Delivery</span></p>
                   </div>
-
                 </div>
               </div>
             ))
