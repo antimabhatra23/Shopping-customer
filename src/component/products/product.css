@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: "Mier book";
   }
   
   .product-container {
@@ -39,7 +39,7 @@
     width: 100%;
     gap: 10px;
   }
-  
+
   .product-actions button {
     padding: 10px;
     border: none;
@@ -82,4 +82,4 @@
   .product-rating {
     font-size: 1.2em;
     color: #ff9800;
-  }
+  } 

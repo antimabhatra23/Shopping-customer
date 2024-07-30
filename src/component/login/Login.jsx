@@ -13,9 +13,10 @@ const Login = ({ setIsLoggedIn }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://shopping-backend-beryl.vercel.app/login', { email, password });
+            const response = await axios.post('http://localhost:5000/api/login', { email, password });
             toast.success(response.data.message);  // Show success toast
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('userId', response.data.userId);
             setIsLoggedIn(true);  // Update login state
             navigate('/');  // Redirect to home page
         } catch (error) {
