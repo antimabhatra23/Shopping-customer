@@ -15,9 +15,9 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://shopping-backend-beryl.vercel.app/api/signup', { name, email, phone, password });
+            const response = await axios.post('https://shopping-backend-beryl.vercel.app/signup', { name, email, phone, password });
             toast.success(response.data.message);  // Show success toast
-            navigate('/login');  // Redirect to the login page
+            navigate('/login');  // Redirect to the signup page
         } catch (error) {
             toast.error(error.response?.data?.error || 'An error occurred');  // Show error toast
         }
