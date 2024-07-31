@@ -24,7 +24,7 @@ const Products = () => {
   const loadProducts = async (category = '', gender = '', color = '', price = '', size = '', rating = '') => {
     try {
       setLoading(true);
-      const response = await axios.get(`https://shopping-backend-rust.vercel.app//products?category=${category}&gender=${gender}&color=${color}&price=${price}&size=${size}&rating=${rating}`);
+      const response = await axios.get(`http:/localhost:5000/products?category=${category}&gender=${gender}&color=${color}&price=${price}&size=${size}&rating=${rating}`);
       setProductList(response?.data?.products);
       setLoading(false);
     } catch (error) {

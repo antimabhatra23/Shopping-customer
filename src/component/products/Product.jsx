@@ -31,7 +31,7 @@ const Product = () => {
     console.log('Request Data:', requestData);
 
     try {
-      const response = await axios.post('https://shopping-backend-rust.vercel.app//orders', requestData);
+      const response = await axios.post('http:/localhost:5000/orders', requestData);
       console.log('response', response);
 
       if (response.status === 201) {
