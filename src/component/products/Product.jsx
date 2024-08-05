@@ -15,6 +15,14 @@ const Product = () => {
 
   // Function to handle Buy Now button click
   const handleBuyNow = async () => {
+    if (!userId) {
+      toast.error('You need to be logged in to place an order');
+      setTimeout(() => {
+        navigate('/login'); // Redirect to login page if not logged in
+      }, 1000);
+      return;
+    }
+
     const requestData = {
       userId: userId,
       items: [
@@ -28,21 +36,47 @@ const Product = () => {
       address: address
     };
 
-    console.log('Request Data:', requestData);
-
     try {
-      const response = await axios.post('http:/localhost:5000/orders', requestData);
-      console.log('response', response);
+      const response = await axios.post('http://localhost:5000/orders', requestData);
 
       if (response.status === 201) {
-        toast.success('Order created successfully!');
         navigate('/order', { state: { order: response.data } }); // Redirect to order page with order details
+        toast.success('Order created successfully!');
       } else {
         toast.error('Failed to create order');
       }
     } catch (error) {
-      console.error('There was an error creating the order!', error);
       toast.error(error.response?.data?.message || 'There was an error creating the order!');
+    }
+  };
+
+  // Function to handle Add to Cart button click
+  const handleAddToCart = async () => {
+    if (!userId) {
+      toast.error('You need to be logged in to add products to your cart');
+      setTimeout(() => {
+        navigate('/login'); // Redirect to login page if not logged in
+      }, 1000);
+      return;
+    }
+
+    const requestData = {
+      userId: userId,
+      productId: product._id,
+      quantity: 1
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/cart', requestData);
+
+      if (response.status === 200) {
+        navigate('/cart', { state: { cart: response.data } }); // Redirect to cart page with cart details
+        toast.success('Product added to cart successfully!');
+      } else {
+        toast.error('Failed to add product to cart');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'There was an error adding the product to the cart!');
     }
   };
 
@@ -51,7 +85,7 @@ const Product = () => {
       <div className="product-image">
         <img src={product.img} alt={product.name} />
         <div className="product-actions">
-          <button className="add-to-cart">Add to Cart</button>
+          <button className="add-to-cart" onClick={handleAddToCart}>Add to Cart</button>
           <button className="buy-now" onClick={handleBuyNow}>Buy Now</button>
         </div>
       </div>

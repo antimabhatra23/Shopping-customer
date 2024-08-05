@@ -9,8 +9,14 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); // Remove token on logout
+    localStorage.removeItem('userId'); // Remove token on logout
+
     navigate("/");
   };
+
+  const handleLogoClick = () => {
+    navigate("/");
+  }
 
   const token = localStorage.getItem("token");
 
@@ -21,12 +27,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   return (
     <nav className="navbar">
       <div className="navbar-left">
-        <div className="navbar-logo">
+        <div onClick={handleLogoClick} className="navbar-logo">
           <img src='/images/logo1.png' alt="Shree Ram Lala Collection" />
         </div>
-        <li>
+        {/* <li>
           <Link to="/">Products</Link>
-        </li>
+        </li> */}
       </div>
       <ul className="navbar-right">
         {isLoggedIn || token ? (
@@ -42,13 +48,13 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                     <Link to="/my-orders">My Orders</Link>
                   </li>
                   <li>
-                    <Link to="/delete-account">Delete Account</Link>
+                    <Link to="/cart">Cart</Link>
+                  </li>
+                  <li>
+                    <Link to="/" onClick={handleLogout} className="logout-link">Logout</Link>
                   </li>
                 </ul>
               )}
-            </li>
-            <li>
-              <button onClick={handleLogout} className="logout-button">Logout</button>
             </li>
           </>
         ) : (

@@ -19,7 +19,7 @@ const Order = () => {
   };
 
   const handleContinue = () => {
-    navigate('/next-step'); // Change this to your desired route
+    navigate('/my-orders'); // Change this to your desired route
   };
 
   return (
@@ -51,7 +51,7 @@ const Order = () => {
 
         <h2>Items</h2>
         <ul>
-          {order.items.map((item, index) => (
+          {order.items?.map((item, index) => (
             <li key={index}>
               <div className="item-details">
                 <p>Product ID: {item.productId}</p>

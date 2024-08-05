@@ -1,31 +1,29 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import "./products.css"; // Import the CSS file
-import { useNavigate } from "react-router-dom"; // Import the useNavigate hook from react-router-dom";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import './products.css'; // Import the CSS file
+import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook from react-router-dom
 
 const Products = () => {
   const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState([]);
-  // const [categories, setCategories] = useState([]); // State to hold categories
-  // const [selectedCategory, setSelectedCategory] = useState(''); // State to hold the selected category
   const [selectedGender, setSelectedGender] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedRating, setSelectedRating] = useState('');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   useEffect(() => {
-    loadProducts();
-    // loadCategories(); // Load categories on component mount
+    loadProducts(); // Load products on component mount
   }, []);
 
   const loadProducts = async (category = '', gender = '', color = '', price = '', size = '', rating = '') => {
     try {
       setLoading(true);
-      const response = await axios.get(`http:/localhost:5000/products?category=${category}&gender=${gender}&color=${color}&price=${price}&size=${size}&rating=${rating}`);
-      setProductList(response?.data?.products);
+      const response = await axios.get(`http://localhost:5000/products?category=${category}&gender=${gender}&color=${color}&price=${price}&size=${size}&rating=${rating}`);
+      setProductList(response?.data?.products || []);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -33,34 +31,27 @@ const Products = () => {
     }
   };
 
-  // const loadCategories = async () => {
-  //   try {
-  //     const response = await axios.get("http://localhost:5000/categories");
-  //     setCategories(response?.data?.categories);
-  //   } catch (error) {
-  //     toast.error("Failed to load categories");
-  //   }
-  // };
-
   const handleProductClick = (product) => {
-    navigate(`/product`,{state: {product}});
+    navigate('/product', { state: { product } }); // Corrected syntax for passing state
   };
 
   const handleFilterChange = () => {
-    loadProducts(selectedGender, selectedColor, selectedPrice, selectedSize, selectedRating);
+    loadProducts('', selectedGender, selectedColor, selectedPrice, selectedSize, selectedRating);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
     <div className="products-page">
-      <div className="filter-sidebar">
-        {/* <h3>Filter by Category</h3>
-        <select value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); handleFilterChange(); }}>
-          <option value="">All</option>
-          {categories.map(category => (
-            <option key={category} value={category}>{category}</option>
-          ))}
-        </select> */}
-        
+      <button 
+        className={`sidebar-toggle ${isSidebarOpen ? 'open' : ''}`} 
+        onClick={toggleSidebar}
+      >
+        {isSidebarOpen ? '✕' : '☰'} {/* Toggle icon based on state */}
+      </button>
+      <div className={`filter-sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <h3>Filter by Gender</h3>
         <select value={selectedGender} onChange={(e) => { setSelectedGender(e.target.value); handleFilterChange(); }}>
           <option value="">All</option>
@@ -107,10 +98,9 @@ const Products = () => {
           <option value="4">4 Stars & Up</option>
           <option value="5">5 Stars</option>
         </select>
-
       </div>
-      <div className="products-container">
-      <h1 className="heading">Products For You</h1>
+      <div className={`products-container ${isSidebarOpen ? 'with-sidebar' : ''}`}>
+        <h1 className="heading">Products For You</h1>
         <div className="products-grid">
           {productList.length > 0 ? (
             productList.map((item) => (
@@ -119,11 +109,10 @@ const Products = () => {
                 className="products-card"
                 onClick={() => handleProductClick(item)} // Make the card clickable
               >
-                <img width={150} height={150} src={item?.img} alt={item?.name} />
+                <img className="products-img" src={item?.img} alt={item?.name} />
                 <div className="products-info">
                   <h2>{item?.name}</h2>
                   <p><span className="rupee-symbol"> ₹ </span>{item?.price} <span className="onward">onwards</span></p>
-
                   <div className="free">
                     <p><span className="deliver">Free Delivery</span></p>
                   </div>

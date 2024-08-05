@@ -6,6 +6,9 @@ import Login from "./component/login/Login";
 import Products from "./component/products/Products";
 import Product from "./component/products/Product";
 import Order from "./component/orders/Order";
+import MyOrder from "./component/customer profile/Myorder";
+import Cart from "./component/customer profile/Cart";
+import ForgotPassword from "./component/forgotpassword/ForgotPassword";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +25,9 @@ const App = () => {
         <Route path="/" element={<Products />} />
         <Route path="/product" element={<Product />} />
         <Route path="/order" element={<Order />} />
-
+        <Route path="/my-orders" element={<MyOrder />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );

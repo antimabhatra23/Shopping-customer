@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import './signup.css';
+import { Link } from 'react-router-dom';
 
 const Signup = () => {
     const [name, setName] = useState('');
@@ -15,7 +16,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http:/localhost:5000/api/signup', { name, email, phone, password });
+            const response = await axios.post('http://localhost:5000/api/signup', { name, email, phone, password });
             toast.success(response.data.message);  // Show success toast
             navigate('/login');  // Redirect to the signup page
         } catch (error) {
@@ -43,6 +44,10 @@ const Signup = () => {
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <button type="submit">Signup</button>
+
+                <div className='Alreadyaccount'> 
+                    <Link to="/login">Already Have An Account? Login </Link>
+                </div>
             </form>
             <ToastContainer />  {/* Add ToastContainer here */}
         </div>
