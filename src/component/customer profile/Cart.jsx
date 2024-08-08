@@ -15,7 +15,6 @@ const Cart = () => {
       try {
         const response = await axios.get(`http://localhost:5000/cart/${userId}`);
         setCart(response.data);
-        toast.success('Cart loaded successfully');
       } catch (error) {
         console.error('Error fetching cart:', error);
         toast.error('Error fetching cart');

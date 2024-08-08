@@ -7,12 +7,11 @@
 .sidebar-toggle {
   font-size: 18px;
   border: none;
-  /* background: #333; */
   color: #000;
   cursor: pointer;
   padding: 10px;
   position: fixed;
-  top: 88px;
+  top: 76px;
   left: 6px;
   z-index: 1000; /* Ensure the toggle button is on top */
   transition: color 0.3s ease;
@@ -24,7 +23,6 @@
   padding: 20px;
   background: #fff; /* Change to a lighter background for better contrast */
   position: fixed;
-  /* top: 0; */
   left: -300px; /* Initially hidden */
   height: 100%;
   overflow-y: auto;
@@ -74,7 +72,6 @@
 .filter-sidebar select option {
   padding: 10px;
 }
-
 
 .products-container {
   flex: 1;

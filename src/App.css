@@ -1,19 +1,26 @@
+/* General Styles */
 * {
   margin: 0;
   padding: 0;
-  font-family: "Mier book";
+  font-family: "Mier book", sans-serif;
   box-sizing: border-box;
 }
 
+/* Navbar Container */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px 20px;
   background-color: #f06161;
   color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
+/* Left Section of Navbar */
 .navbar-left {
   display: flex;
   align-items: center;
@@ -25,17 +32,23 @@
   cursor: pointer;
 }
 
-.navbar-left li {
-  list-style: none;
+/* Middle Section of Navbar */
+.navbar-middle {
+  flex: 1;
+  display: flex;
+  justify-content: center;
 }
 
-.navbar-left li a {
-  color: #fff;
-  text-decoration: none;
-  margin-left: 20px;
-  font-size: 18px;
+.search-bar {
+  width: 100%;
+  max-width: 400px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
 }
 
+/* Right Section of Navbar */
 .navbar-right {
   display: flex;
   align-items: center;
@@ -50,9 +63,14 @@
 .navbar-right li a {
   color: #fff;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
+.navbar-right li a:hover {
+  color: #ffd1d1;
+}
 
+/* Profile Menu */
 .profile-menu {
   position: relative;
 }
@@ -64,7 +82,8 @@
   cursor: pointer;
   font-size: 1em;
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  transition: color 0.3s ease;
 }
 
 .profile-button::after {
@@ -73,6 +92,11 @@
   font-size: 0.8em;
 }
 
+.profile-button:hover {
+  color: #ffd1d1;
+}
+
+/* Dropdown Menu */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -96,24 +120,115 @@
   padding: 10px 20px;
   color: #333;
   text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.dropdown-menu li a:hover {
+.dropdown-menu li a:hover,
+.logout-link:hover {
   background-color: #f5f5f5;
 }
 
-.logout-button {
-  display: block;
-  padding: 10px 20px;
-  color: #333;
-  text-decoration: none;
+/* Main content container */
+.main-content {
+  margin-top: 60px; /* Adjust this value based on your navbar's height */
 }
 
-.logout-button:hover {
-  background-color: #f5f5f5;
+/* Media Queries for Responsiveness */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 10px 15px;
+  }
+
+  .navbar-logo img {
+    height: 35px;
+    margin-right: 15px;
+  }
+
+  .navbar-right li {
+    margin-left: 15px;
+    font-size: 16px;
+  }
+
+  .search-bar {
+    max-width: 300px;
+    font-size: 14px;
+  }
 }
 
-.profile-button:hover,
-.dropdown-menu li a:hover {
-  text-decoration: underline;
+@media (max-width: 768px) {
+  .navbar {
+    padding: 10px;
+  }
+
+  .navbar-logo img {
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .navbar-middle {
+    flex: 1;
+    max-width: 250px;
+  }
+
+  .navbar-right {
+    justify-content: flex-end;
+  }
+
+  .navbar-right li {
+    margin-left: 10px;
+    font-size: 16px;
+  }
+
+  .profile-button {
+    font-size: 0.9em;
+  }
+
+  .dropdown-menu {
+    min-width: 150px;
+  }
+
+  .dropdown-menu li a {
+    padding: 8px 15px;
+  }
+
+  .search-bar {
+    max-width: 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 10px 5px;
+  }
+
+  .navbar-logo img {
+    height: 25px;
+    margin-right: 5px;
+  }
+
+  .navbar-middle {
+    flex: 1;
+    max-width: 150px;
+  }
+
+  .navbar-right {
+    justify-content: flex-end;
+  }
+
+  .navbar-right li {
+    margin-left: 8px;
+    font-size: 14px;
+  }
+
+  .dropdown-menu {
+    min-width: 120px;
+  }
+
+  .dropdown-menu li a {
+    padding: 5px 10px;
+  }
+
+  .search-bar {
+    max-width: 150px;
+  }
 }

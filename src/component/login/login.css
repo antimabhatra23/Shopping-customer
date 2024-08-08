@@ -1,19 +1,21 @@
- * {
+/* General Reset and Box Sizing */
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
- }
- 
+}
+
+/* Form Container */
 form {
   display: flex;
   flex-direction: column;
-  width: 300px;
-  margin: 50px auto;
+  width: 300px; /* Fixed width for form */
+  margin: 50px auto; /* Center the form */
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  background-color: #fff; /* White background for form */
 }
 
 /* Labels for the input fields */
@@ -22,7 +24,7 @@ label {
   font-weight: bold;
 }
 
-/* Input fields */
+/* Input fields styling */
 input[type="email"],
 input[type="password"] {
   padding: 10px;
@@ -32,10 +34,10 @@ input[type="password"] {
   box-sizing: border-box;
 }
 
-/* Submit button */
+/* Submit button styling */
 button[type="submit"] {
   padding: 10px 15px;
-  background-color: #007bff;
+  background-color: #007bff; /* Primary blue color */
   color: white;
   border: none;
   border-radius: 5px;
@@ -43,8 +45,9 @@ button[type="submit"] {
   font-size: 16px;
 }
 
+/* Submit button hover effect */
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* Darker blue on hover */
 }
 
 /* Link to sign up */
@@ -62,28 +65,29 @@ button[type="submit"]:hover {
 /* Styling for the links */
 .Noaccount a,
 .forgotPassword a {
-  color: #007bff;
+  color: #007bff; /* Primary blue color */
   text-decoration: none;
 }
 
+/* Link hover effect */
 .Noaccount a:hover,
 .forgotPassword a:hover {
   text-decoration: underline;
 }
 
-/* ToastContainer styles */
+/* ToastContainer styles for notifications */
 .Toastify__toast-container {
   font-size: 14px;
 }
 
-/* Responsive styling */
+/* Responsive styling for smaller screens */
 @media (max-width: 480px) {
   form {
-      width: 90%;
-      padding: 15px;
+    width: 90%; /* Full width with some padding */
+    padding: 15px;
   }
 
   button[type="submit"] {
-      font-size: 14px;
+    font-size: 14px; /* Slightly smaller font for buttons */
   }
 }

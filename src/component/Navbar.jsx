@@ -10,13 +10,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); // Remove token on logout
     localStorage.removeItem('userId'); // Remove token on logout
-
     navigate("/");
   };
 
   const handleLogoClick = () => {
     navigate("/");
-  }
+  };
 
   const token = localStorage.getItem("token");
 
@@ -25,20 +24,24 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-left">
-        <div onClick={handleLogoClick} className="navbar-logo">
-          <img src='/images/logo1.png' alt="Shree Ram Lala Collection" />
+    <>
+      <nav className="navbar">
+        <div className="navbar-left">
+          <div onClick={handleLogoClick} className="navbar-logo">
+            <img src="/images/logo1.png" alt="Shree Ram Lala Collection" />
+          </div>
         </div>
-        {/* <li>
-          <Link to="/">Products</Link>
-        </li> */}
-      </div>
-      <ul className="navbar-right">
-        {isLoggedIn || token ? (
-          <>
+        
+        <div className="navbar-middle">
+          <input type="text" className="search-bar" placeholder="Search..." />
+        </div>
+
+        <ul className="navbar-right">
+          {isLoggedIn || token ? (
             <li className="profile-menu">
-              <button onClick={toggleDropdown} className="profile-button">My Profile</button>
+              <button onClick={toggleDropdown} className="profile-button">
+                My Profile
+              </button>
               {isDropdownOpen && (
                 <ul className="dropdown-menu">
                   <li>
@@ -51,24 +54,29 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn }) => {
                     <Link to="/cart">Cart</Link>
                   </li>
                   <li>
-                    <Link to="/" onClick={handleLogout} className="logout-link">Logout</Link>
+                    <Link to="/" onClick={handleLogout} className="logout-link">
+                      Logout
+                    </Link>
                   </li>
                 </ul>
               )}
             </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <Link to="/signup">Signup</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </nav>
+          ) : (
+            <>
+              <li>
+                <Link to="/signup">Signup</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
+      <div className="main-content">
+        {/* Your other components go here */}
+      </div>
+    </>
   );
 };
 
