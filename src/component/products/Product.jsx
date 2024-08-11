@@ -11,7 +11,7 @@ const Product = () => {
   const product = location.state?.product || {};
 
   const userId = localStorage.getItem('userId');
-  const address = '';
+  // const address = '';
 
   // Function to handle Buy Now button click
   const handleBuyNow = async () => {
