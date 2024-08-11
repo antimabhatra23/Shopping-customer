@@ -11,7 +11,7 @@ const Product = () => {
   const product = location.state?.product || {};
 
   const userId = localStorage.getItem('userId');
-  const address = 'Murli Krishna Colony, 223309, Jaipur';
+  const address = '';
 
   // Function to handle Buy Now button click
   const handleBuyNow = async () => {
