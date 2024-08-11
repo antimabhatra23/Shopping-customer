@@ -17,6 +17,11 @@
   transition: color 0.3s ease;
 }
 
+.sidebar-toggle:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+
 /* Styling for the filter sidebar */
 .filter-sidebar {
   width: 300px;
@@ -31,16 +36,14 @@
   z-index: 999;
 }
 
-/* Sidebar content headers */
 .filter-sidebar h3 {
   font-size: 18px;
   margin-bottom: 15px;
-  border-bottom: 2px solid #ddd; /* Add a border under the header */
+  border-bottom: 2px solid #ddd; 
   padding-bottom: 10px;
   color: #333;
 }
 
-/* Styling for select elements */
 .filter-sidebar select {
   width: 100%;
   padding: 10px;
@@ -52,25 +55,48 @@
   box-sizing: border-box;
 }
 
-/* Styling for the filter sidebar when open */
 .filter-sidebar.open {
   left: 0; /* Slide in when open */
 }
 
-/* Remove default margin and padding from select elements */
 .filter-sidebar select:focus {
   outline: none;
-  border-color: #007bff; /* Highlight border color on focus */
+  border-color: #007bff; 
 }
 
-/* Add some space between filters */
 .filter-sidebar select + h3 {
   margin-top: 20px;
 }
 
-/* Add some padding and border to the select options */
 .filter-sidebar select option {
   padding: 10px;
+}
+
+.reset-filters-button {
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  font-size: 19px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.reset-filters-button:hover {
+  background-color: #e0e0e0;
+  color: #000; 
+}
+
+.reset-filters-button:active {
+  background-color: #ccc;
+}
+
+.reset-filters-button:focus {
+  outline: none; 
+  box-shadow: 0 0 0 2px rgba(0, 0, 255, 0.5); 
 }
 
 .products-container {
@@ -98,7 +124,6 @@
   gap: 20px;
 }
 
-/* Styling for individual product cards */
 .products-card {
   background: #fff;
   border: 1px solid #ddd;
@@ -106,6 +131,9 @@
   overflow: hidden;
   cursor: pointer;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
+  width: 100%; /* Ensure cards take full width */
+  height: auto; /* Ensure height adjusts automatically */
+  box-sizing: border-box; /* Include padding and border in the element’s total width and height */
 }
 
 .products-card:hover {
@@ -115,7 +143,7 @@
 
 .products-img {
   width: 100%;
-  height: 200px;
+  height: 250px; /* Adjust height automatically based on the aspect ratio */
   object-fit: cover;
 }
 
@@ -155,4 +183,43 @@
   text-align: center;
   font-size: 18px;
   color: #888;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .filter-sidebar {
+    width: 250px;
+    left: -250px; /* Adjust for smaller screens */
+  }
+
+  .products-container.with-sidebar {
+    margin-left: 250px; /* Adjust for sidebar width */
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .filter-sidebar {
+    width: 200px;
+    left: -200px; /* Adjust for smaller screens */
+  }
+
+  .products-container.with-sidebar {
+    margin-left: 200px; /* Adjust for sidebar width */
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .products-info h2 {
+    font-size: 16px;
+  }
+
+  .products-info p {
+    font-size: 14px;
+  }
 }

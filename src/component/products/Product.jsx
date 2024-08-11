@@ -37,7 +37,7 @@ const Product = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/orders', requestData);
+      const response = await axios.post('https://clothing-backend-two.vercel.app/orders', requestData);
 
       if (response.status === 201) {
         navigate('/order', { state: { order: response.data } }); // Redirect to order page with order details
@@ -67,7 +67,7 @@ const Product = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/cart', requestData);
+      const response = await axios.post('https://clothing-backend-two.vercel.app/cart', requestData);
 
       if (response.status === 200) {
         navigate('/cart', { state: { cart: response.data } }); // Redirect to cart page with cart details

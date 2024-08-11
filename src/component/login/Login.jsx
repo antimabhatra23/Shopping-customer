@@ -14,7 +14,7 @@ const Login = ({ setIsLoggedIn }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/login', { email, password });
+            const response = await axios.post('https://clothing-backend-two.vercel.app/api/login', { email, password });
             toast.success(response.data.message);  // Show success toast
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('userId', response.data.userId);

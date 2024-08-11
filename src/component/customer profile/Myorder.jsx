@@ -13,7 +13,7 @@ const MyOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/orders/user/${userid}`, {
+        const response = await axios.get(`https://clothing-backend-two.vercel.app/orders/user/${userid}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

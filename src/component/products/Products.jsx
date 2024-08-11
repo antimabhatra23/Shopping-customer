@@ -1,59 +1,82 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import './products.css'; // Import the CSS file
-import { useNavigate } from 'react-router-dom'; // Import the useNavigate hook from react-router-dom
+import './products.css';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Products = () => {
   const [loading, setLoading] = useState(false);
   const [productList, setProductList] = useState([]);
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedRating, setSelectedRating] = useState('');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  // Load products when the component mounts or when the URL search params change
   useEffect(() => {
-    loadProducts(); // Load products on component mount
-  }, []);
+    const params = new URLSearchParams(location.search);
+    const searchQuery = params.get('search') || '';
+    loadProducts(searchQuery);
+  }, [location.search]);
 
-  const loadProducts = async (category = '', gender = '', color = '', price = '', size = '', rating = '') => {
+  const loadProducts = async (queryString = '') => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const response = await axios.get(`http://localhost:5000/products?category=${category}&gender=${gender}&color=${color}&price=${price}&size=${size}&rating=${rating}`);
-      setProductList(response?.data?.products || []);
-      setLoading(false);
+      const response = await axios.get(`https://clothing-backend-two.vercel.app/products?${queryString}`);
+      setProductList(response.data.products);
     } catch (error) {
+      console.error('Error fetching products:', error);
+      toast.error('Failed to fetch products');
+    } finally {
       setLoading(false);
-      toast.error("Failed to load products");
     }
   };
 
-  const handleProductClick = (product) => {
-    navigate('/product', { state: { product } }); // Corrected syntax for passing state
+  const handleFilterChange = () => {
+    const queryParams = new URLSearchParams();
+  
+    if (selectedCategory) queryParams.append('category', selectedCategory);
+    if (selectedColor) queryParams.append('color', selectedColor);
+    if (selectedPrice) queryParams.append('price', selectedPrice);
+    if (selectedSize) queryParams.append('size', selectedSize);
+    if (selectedRating) queryParams.append('rating', selectedRating);
+  
+    const queryString = queryParams.toString();
+    loadProducts(queryString);
   };
 
-  const handleFilterChange = () => {
-    loadProducts('', selectedGender, selectedColor, selectedPrice, selectedSize, selectedRating);
+  const resetFilters = () => {
+    setSelectedCategory('');
+    setSelectedColor('');
+    setSelectedPrice('');
+    setSelectedSize('');
+    setSelectedRating('');
+    loadProducts(); // Reload products without any filters
   };
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const handleProductClick = (product) => {
+    navigate('/product', { state: { product } });
+  };
+
   return (
     <div className="products-page">
-      <button 
-        className={`sidebar-toggle ${isSidebarOpen ? 'open' : ''}`} 
+      <button
+        className={`sidebar-toggle ${isSidebarOpen ? 'open' : ''}`}
         onClick={toggleSidebar}
       >
-        {isSidebarOpen ? '✕' : '☰'} {/* Toggle icon based on state */}
+        {isSidebarOpen ? '✕' : '☰'}
       </button>
       <div className={`filter-sidebar ${isSidebarOpen ? 'open' : ''}`}>
-        <h3>Filter by Gender</h3>
-        <select value={selectedGender} onChange={(e) => { setSelectedGender(e.target.value); handleFilterChange(); }}>
+        <h3>Filter by Category</h3>
+        <select value={selectedCategory} onChange={(e) => { setSelectedCategory(e.target.value); handleFilterChange(); }}>
           <option value="">All</option>
           <option value="Men">Men</option>
           <option value="Women">Women</option>
@@ -68,16 +91,20 @@ const Products = () => {
           <option value="Green">Green</option>
           <option value="Black">Black</option>
           <option value="White">White</option>
+          <option value="Sky Blue">Sky Blue</option>
+          <option value="Brown">Brown</option>
+          <option value="Gray">Gray</option>
         </select>
 
         <h3>Filter by Price</h3>
         <select value={selectedPrice} onChange={(e) => { setSelectedPrice(e.target.value); handleFilterChange(); }}>
           <option value="">All</option>
-          <option value="0-500">₹0 - ₹500</option>
-          <option value="500-1000">₹500 - ₹1000</option>
-          <option value="1000-2000">₹1000 - ₹2000</option>
-          <option value="2000-5000">₹2000 - ₹5000</option>
-          <option value="5000-10000">₹5000 - ₹10000</option>
+          <option value="100">₹100</option>
+          <option value="200">₹200</option>
+          <option value="300">₹300</option>
+          <option value="400">₹400</option>
+          <option value="500">₹500</option>
+          <option value="600">₹600</option>
         </select>
 
         <h3>Filter by Size</h3>
@@ -98,29 +125,32 @@ const Products = () => {
           <option value="4">4 Stars & Up</option>
           <option value="5">5 Stars</option>
         </select>
+
+        <button onClick={resetFilters} className="reset-filters-button">Reset Filters</button>
       </div>
+
       <div className={`products-container ${isSidebarOpen ? 'with-sidebar' : ''}`}>
         <h1 className="heading">Products For You</h1>
         <div className="products-grid">
-          {productList.length > 0 ? (
-            productList.map((item) => (
-              <div 
-                key={item._id} 
+          {loading ? (
+            <p>Loading...</p>
+          ) : productList?.length > 0 ? (
+            productList?.map((item) => (
+              <div
+                key={item._id}
                 className="products-card"
-                onClick={() => handleProductClick(item)} // Make the card clickable
+                onClick={() => handleProductClick(item)}
               >
                 <img className="products-img" src={item?.img} alt={item?.name} />
                 <div className="products-info">
                   <h2>{item?.name}</h2>
                   <p><span className="rupee-symbol"> ₹ </span>{item?.price} <span className="onward">onwards</span></p>
-                  <div className="free">
-                    <p><span className="deliver">Free Delivery</span></p>
-                  </div>
+                  <p className="free">Free Delivery <span className="deliver">Onwards</span></p>
                 </div>
               </div>
             ))
           ) : (
-            <p className="no-data">No Data</p>
+            <p className="no-data">No products found.</p>
           )}
         </div>
       </div>
