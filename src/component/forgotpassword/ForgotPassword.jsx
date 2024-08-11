@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     const handleSendOtp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/forgot-password', { email });
+            const response = await axios.post('https://clothing-backend-two.vercel.app/forgot-password', { email });
             toast.success(response.data.message);
             setStep(2); // Proceed to OTP verification step
         } catch (error) {
@@ -26,7 +26,7 @@ const ForgotPassword = () => {
     const handleVerifyOtp = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/forgot-password/verify', { email, otp });
+            const response = await axios.post('https://clothing-backend-two.vercel.app/forgot-password/verify', { email, otp });
             toast.success(response.data.message);
             setStep(3); // Proceed to new password step
         } catch (error) {
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
     const handleResetPassword = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/forgot-password/reset-password', { email, newPassword });
+            const response = await axios.post('https://clothing-backend-two.vercel.app/forgot-password/reset-password', { email, newPassword });
             toast.success(response.data.message);
             navigate('/login');
             // Optionally, redirect to login page or show a success message
