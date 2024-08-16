@@ -11,7 +11,7 @@ const Product = () => {
   const product = location.state?.product || {};
 
   const userId = localStorage.getItem('userId');
-  // const address = '';
+  const address = '';
 
   // Function to handle Buy Now button click
   const handleBuyNow = async () => {
@@ -35,19 +35,7 @@ const Product = () => {
       totalAmount: product.price,
       address: address
     };
-
-    try {
-      const response = await axios.post('https://clothing-backend-two.vercel.app/orders', requestData);
-
-      if (response.status === 201) {
-        navigate('/order', { state: { order: response.data } }); // Redirect to order page with order details
-        toast.success('Order created successfully!');
-      } else {
-        toast.error('Failed to create order');
-      }
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'There was an error creating the order!');
-    }
+    navigate('/order', { state: { requestData } });
   };
 
   // Function to handle Add to Cart button click

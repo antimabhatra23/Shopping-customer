@@ -1,25 +1,58 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './order.css';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const Order = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const order = location.state?.order || {};
+  const order = location.state?.requestData || {};
 
   const [address, setAddress] = useState(order.address);
-  const [isEditingAddress, setIsEditingAddress] = useState(false);
+  // const [isEditingAddress, setIsEditingAddress] = useState(true);
+  const [addressError, setAddressError] = useState("");
 
   const handleAddressChange = (e) => {
+    setAddressError("")
     setAddress(e.target.value);
   };
 
-  const handleEditAddress = () => {
-    setIsEditingAddress(!isEditingAddress);
-  };
+  // const handleEditAddress = () => {
+  //   setIsEditingAddress(!isEditingAddress);
+  // };
 
-  const handleContinue = () => {
-    navigate('/my-orders'); // Change this to your desired route
+  const handleContinue =async () => {
+    try {
+      console.log({reqdata:location?.state?.requestData});
+
+      let reqdata = location?.state?.requestData;
+
+      if(address?.length<=0){
+        setAddressError("Please fill delivery address")
+        return;
+      }
+
+      reqdata["address"]=address;
+
+      console.log({reqdata});
+      
+      
+      const response = await axios.post('https://clothing-backend-two.vercel.app/orders', location?.state?.requestData);
+
+      if (response.status === 201) {
+        navigate('/order', { state: { order: response.data } }); // Redirect to order page with order details
+        toast.success('Order created successfully!');
+        setTimeout(() => {
+          navigate('/my-orders'); 
+        }, 1000);
+
+      } else {
+        toast.error('Failed to create order');
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'There was an error creating the order!');
+    }
   };
 
   return (
@@ -35,18 +68,16 @@ const Order = () => {
 
         <div className="address-section">
           <h2>Delivery Address</h2>
-          {isEditingAddress ? (
             <input
               type="text"
               value={address}
               onChange={handleAddressChange}
             />
-          ) : (
-            <p>{address}</p>
-          )}
-          <button onClick={handleEditAddress}>
-            {isEditingAddress ? 'Save Address' : 'Edit Address'}
-          </button>
+            {
+              addressError?.length>0?(
+                <p style={{"color":"red","fontWeight":"bold"}}>{addressError}</p>
+              ):null
+            }
         </div>
 
         <h2>Items</h2>
